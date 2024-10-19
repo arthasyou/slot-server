@@ -1,0 +1,17 @@
+{
+  "sqltools.useNodeRuntime": true,
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "test",
+      "database": "${workspaceFolder:slot-server}/a.db"
+    },
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "pool",
+      "database": "${workspaceFolder:slot-server}/pool.db"
+    }
+  ]
+}
