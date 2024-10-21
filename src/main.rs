@@ -49,7 +49,6 @@ async fn load_pools_from_db(db: &DatabaseConnection, pools: &mut HashMap<u32, Po
             model.jackpot as u64,
             model.suction as u64,
             model.brokerage as u64,
-            model.bonus as u64,
             model.advance as u64,
         );
         pools.insert(model.id, pool);

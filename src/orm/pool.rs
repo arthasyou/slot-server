@@ -18,7 +18,6 @@ pub struct Model {
     pub suction: i64,
     pub brokerage: i64,
     pub jackpot: i64,
-    pub bonus: i64,
     pub advance: i64,
 }
 

@@ -10,7 +10,6 @@ CREATE TABLE pool (
     brokerage INTEGER NOT NULL DEFAULT 0,         
     pot INTEGER NOT NULL DEFAULT 0,               
     suction INTEGER NOT NULL DEFAULT 0,           
-    jackpot INTEGER NOT NULL DEFAULT 0,    
-    bonus INTEGER NOT NULL DEFAULT 0,                  
+    jackpot INTEGER NOT NULL DEFAULT 0,                  
     advance INTEGER NOT NULL DEFAULT 0            
 );

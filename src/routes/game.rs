@@ -65,7 +65,6 @@ fn pool_to_active_model(pool: &Pool) -> ActiveModel {
         suction: Set(pool.suction as i64),
         brokerage: Set(pool.brokerage as i64),
         jackpot: Set(pool.jackpot as i64),
-        bonus: Set(pool.bonus as i64),
         advance: Set(pool.advance as i64),
         ..Default::default() // 其他字段保持默认
     }
