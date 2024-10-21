@@ -1,7 +1,7 @@
 use std::{collections::HashMap, sync::Arc};
 
 use axum::{http::StatusCode, response::IntoResponse, routing::post, Extension, Json, Router};
-use sea_orm::{sqlx::database, ActiveModelTrait, DatabaseConnection, Set};
+use sea_orm::{ActiveModelTrait, DatabaseConnection, Set};
 use slot_algorithm::pool::{Pool, RATIO};
 use tokio::sync::Mutex;
 use validator::Validate;
@@ -31,18 +31,26 @@ async fn create_pool(
                 boundary: Set(payload.boundary as i64 * RATIO as i64),
                 ..Default::default()
             };
-            let resutl = new_pool.insert(&database).await.unwrap();
+            let result = new_pool.insert(&database).await.unwrap();
             let pool = Pool::new(
+                result.id,
                 1,
-                1,
-                1,
-                resutl.brokerage_ratio as u64,
-                resutl.boundary as u64,
-                resutl.advance as u64,
+                result.bet_unit as u64,
+                result.brokerage_ratio as u64,
+                result.jackpot_ratio as u64,
+                result.boundary as u64,
+                result.advance as u64,
             );
             pools.lock().await.insert(1, pool);
-            // "ok".to_owned();
-            (StatusCode::OK, Json(payload)).into_response()
+            let response = CreatePoolResponse {
+                id: result.id,
+                boundary: payload.boundary,
+                brokerage_ratio: payload.brokerage_ratio,
+                jackpot_ratio: payload.jackpot_ratio,
+                advance: payload.advance,
+                bet_unit: payload.bet_unit,
+            };
+            (StatusCode::OK, Json(response)).into_response()
         }
         Err(e) => AppError::new(StatusCode::BAD_REQUEST, e.to_string()).into_response(),
     }

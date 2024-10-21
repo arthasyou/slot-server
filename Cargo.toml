@@ -20,4 +20,4 @@ serde_with = "3.4.0"
 tokio = { version = "1.34.0", features = ["full"] }
 tower-http = { version = "0.6", features = ["cors"] }
 validator = { version = "0.18", features = ["derive"] }
-slot-algorithm = {git = "https://github.com/arthasyou/slot-algorithm.git", branch = "master"}
+slot-algorithm = {git = "https://github.com/arthasyou/slot-algorithm.git", branch = "dev"}

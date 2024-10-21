@@ -14,10 +14,11 @@ use sea_orm::DatabaseConnection;
 use slot_algorithm::pool::Pool;
 use tokio::sync::Mutex;
 
-pub fn create_routes(database: DatabaseConnection) -> Router {
+pub fn create_routes(
+    database: DatabaseConnection,
+    pools: Arc<Mutex<HashMap<u32, Pool>>>,
+) -> Router {
     let cors = create_cors();
-    let pools: HashMap<u32, Pool> = HashMap::new();
-    let pools = Arc::new(Mutex::new(pools));
 
     Router::new()
         // .merge(routes_manage())
