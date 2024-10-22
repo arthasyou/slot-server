@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 
-use serde::{Deserialize, Serialize};
-use slot_algorithm::slots::fruit::{FruitBet, FruitReward};
+use serde::Deserialize;
+use slot_algorithm::slots::fruit::FruitBet;
 use validator::{Validate, ValidationError};
 
 #[derive(Debug, Deserialize, Validate)]

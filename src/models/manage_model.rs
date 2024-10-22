@@ -20,7 +20,7 @@ pub struct CreatePoolRequest {
 }
 
 #[derive(Debug, Serialize)]
-pub struct CreatePoolResponse {
+pub struct PoolResponse {
     pub id: u32,
     pub boundary: u32,
     pub bet_unit: u32,
@@ -28,3 +28,13 @@ pub struct CreatePoolResponse {
     pub jackpot_ratio: u32,
     pub advance: u32,
 }
+
+// #[derive(Debug, Serialize)]
+// pub struct GetPoolsResponse {
+//     pub id: u32,
+//     pub boundary: u32,
+//     pub bet_unit: u32,
+//     pub brokerage_ratio: u32,
+//     pub jackpot_ratio: u32,
+//     pub advance: u32,
+// }

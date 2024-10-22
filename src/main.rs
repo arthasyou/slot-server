@@ -21,6 +21,8 @@ async fn main() {
     dotenv().ok();
 
     let database_uri = dotenv!("DATABASE_URL");
+    let port = dotenv!("PORT");
+    let addr = format!("0.0.0.0:{}", port);
     let database = connect_db(database_uri).await.unwrap();
 
     let mut pools: HashMap<u32, Pool> = HashMap::new();
@@ -29,7 +31,7 @@ async fn main() {
 
     let routes = routes::create_routes(database, pools);
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
 
     axum::serve(listener, routes).await.unwrap();
 }
