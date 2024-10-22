@@ -33,13 +33,6 @@ async fn fruit_draw(
                         eprintln!("Failed to update pool: {}", e); // 错误处理
                     }
                 });
-                println!(
-                    "pot: {}, segment: {:?}  waves: {}",
-                    pool.pot,
-                    pool.get_segment(),
-                    pool.get_waves_len()
-                );
-
                 // 返回绘制结果
                 (StatusCode::OK, Json(result)).into_response()
             }
