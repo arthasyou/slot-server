@@ -7,7 +7,7 @@ use tokio::sync::Mutex;
 use validator::Validate;
 
 use crate::{
-    models::game_model::{FruitDrawRequest, SimpleDrawRequest},
+    models::game_model::{FruitDrawRequest, SimpleDrawRequest, SimpleDrawRespones},
     orm::pool::ActiveModel,
 };
 
@@ -56,7 +56,7 @@ async fn simple_draw(
     match payload.validate() {
         Ok(_) => match pools.lock().await.get_mut(&payload.pool_id) {
             Some(pool) => {
-                let result = pool.draw(payload.bets, payload.odds);
+                let (flag, reward) = pool.draw(payload.bets, payload.odds);
 
                 // 异步后台任务进行数据库同步，不阻塞当前请求
                 let pool_clone = pool.clone();
@@ -67,8 +67,9 @@ async fn simple_draw(
                         eprintln!("Failed to update pool: {}", e); // 错误处理
                     }
                 });
+                let response = SimpleDrawRespones { flag, reward };
                 // 返回绘制结果
-                (StatusCode::OK, Json(result)).into_response()
+                (StatusCode::OK, Json(response)).into_response()
             }
             None => AppError::new(StatusCode::BAD_REQUEST, "pool id not existed".to_string())
                 .into_response(),
