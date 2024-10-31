@@ -6,11 +6,11 @@ mod routes;
 
 // use chrono::{Local, TimeZone, Utc};
 
-use std::{collections::HashMap, sync::Arc};
+use std::{collections::HashMap, env, sync::Arc};
 
 use db::connect_db;
 use dotenvy::dotenv;
-use dotenvy_macro::dotenv;
+// use dotenvy_macro::dotenv;
 use orm::pool;
 use sea_orm::{DatabaseConnection, EntityTrait};
 use slot_algorithm::pool::Pool;
@@ -20,10 +20,11 @@ use tokio::sync::Mutex;
 async fn main() {
     dotenv().ok();
 
-    let database_uri = dotenv!("DATABASE_URL");
-    let port = dotenv!("PORT");
+    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    let port = env::var("PORT").expect("PORT must be set");
     let addr = format!("0.0.0.0:{}", port);
-    let database = connect_db(database_uri).await.unwrap();
+    println!("addr: {:?}", addr);
+    let database = connect_db(&database_url).await.unwrap();
 
     let mut pools: HashMap<u32, Pool> = HashMap::new();
     load_pools_from_db(&database, &mut pools).await;
