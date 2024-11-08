@@ -1,6 +1,11 @@
 use std::{collections::HashMap, sync::Arc};
 
-use axum::{http::StatusCode, response::IntoResponse, routing::post, Extension, Json, Router};
+use axum::{
+    http::StatusCode,
+    response::IntoResponse,
+    routing::{get, post},
+    Extension, Json, Router,
+};
 use sea_orm::{ActiveModelTrait, DatabaseConnection, EntityTrait, Set};
 use slot_algorithm::pool::{Pool, RATIO};
 use tokio::sync::Mutex;
@@ -15,7 +20,7 @@ use crate::{
 pub fn routes_manage() -> Router {
     Router::new()
         .route("/create_pool", post(create_pool))
-        .route("/get_pools", post(get_pools))
+        .route("/get_pools", get(get_pools))
 }
 
 async fn create_pool(
